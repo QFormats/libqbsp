@@ -25,11 +25,11 @@ namespace qformats::qbsp
         return matches;
     }
 
-    void BaseEntity::ParseEntites(const char *entsrc, std::function<void(BaseEntity *ent)> f)
+    void BaseEntity::ParseEntites(const char *entsrc, std::function<void(BaseEntity &ent)> f)
     {
         auto entstr = std::stringstream(entsrc);
         int current_index = 0;
-        auto current_ent = new BaseEntity();
+        auto current_ent = BaseEntity();
 
         for (string line; std::getline(entstr, line);)
         {
@@ -45,13 +45,13 @@ namespace qformats::qbsp
             line = ltrim(line);
             if (line == "{")
             {
-                current_ent = new BaseEntity();
+                current_ent = BaseEntity();
                 continue;
             }
 
             if (line == "}")
             {
-                current_ent->setup();
+                current_ent.setup();
 
                 f(current_ent);
                 continue;
@@ -63,7 +63,7 @@ namespace qformats::qbsp
                 continue;
             }
 
-            current_ent->attributes.emplace(matches[0], matches[1]);
+            current_ent.attributes.emplace(matches[0], matches[1]);
         }
     }
 
@@ -75,6 +75,7 @@ namespace qformats::qbsp
             if (classname == "worldspawn")
             {
                 this->type = ETypeSolidEntity;
+                this->modelID = 0;
             }
         }
 
@@ -105,5 +106,13 @@ namespace qformats::qbsp
             stream >> angle;
             return;
         }
+    }
+
+    void BaseEntity::convertToOpenGLCoords()
+    {
+        auto temp = origin.y;
+        origin.y = origin.z;
+        origin.z = -temp;
+        angle += 180;
     }
 }

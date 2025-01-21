@@ -80,22 +80,20 @@ namespace qformats::qbsp
 
     struct fFace_t
     {
-        uint16_t plane_id;       // The plane in which the face lies
-                                 //           must be in [0,numplanes[
-        uint16_t side;           // 0 if in front of the plane, 1 if behind the plane
-        uint32_t ledge_id;       // first edge in the List of edges
-                                 //           must be in [0,numledges[
-        uint16_t ledge_num;      // number of edges in the List of edges
-        uint16_t texinfo_id;     // index of the Texture info the face is part of
-                                 //           must be in [0,numtexinfos[
-        unsigned char typelight; // type of lighting, for the face
-        unsigned char baselight; // from 0xFF (dark) to 0 (bright)
-        unsigned char light[2];  // two additional light models
-        int32_t lightmap;        // Pointer inside the general light map, or -1
-                                 // this define the start of the face light map
+        uint16_t plane_id;      // The plane in which the face lies
+                                //           must be in [0,numplanes[
+        uint16_t side;          // 0 if in front of the plane, 1 if behind the plane
+        uint32_t ledge_id;      // first edge in the List of edges
+                                //           must be in [0,numledges[
+        uint16_t ledge_num;     // number of edges in the List of edges
+        uint16_t texinfo_id;    // index of the Texture info the face is part of
+                                //           must be in [0,numtexinfos[
+        unsigned char light[4]; // two additional light models
+        int32_t lightmap;       // Pointer inside the general light map, or -1
+                                // this define the start of the face light map
     };
 
-    struct fSurface_t
+    struct fSurfaceInfo_t
     {
         vec3f_t u_axis;      // U vector, horizontal in texture space)
         float u_offset;      // horizontal offset in texture space
@@ -170,7 +168,7 @@ namespace qformats::qbsp
         vector<vec3f_t> vertices;
         vector<fFace_t> faces;
         vector<fEdge_t> edges;
-        vector<fSurface_t> surfaces;
+        vector<fSurfaceInfo_t> surfaces;
         vector<fModel_t> models;
         vector<miptex_t> miptextures;
         vector<int32_t> surfEdges;

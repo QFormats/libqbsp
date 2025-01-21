@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
-
-#include "ftypes.h"
+#include "bsp_file.h"
 #include "entity.h"
 
 namespace qformats::qbsp
@@ -14,14 +13,27 @@ namespace qformats::qbsp
         vec2f_t lm_uv;
     };
 
-    struct Face
+    class Surface
     {
+    public:
+        void Build(const bspFileContent &ctx, const fFace_t *fsurface);
         int id;
         int lightmapID;
-        const fSurface_t *surface;
+        const fSurfaceInfo_t *info;
+        const fFace_t *fsurface;
+        const miptex_t *textureReference;
         vector<Vertex> verts;
         vector<uint32_t> indices;
+        uint8_t *lm_samples;
+        int lm_tex_num;
+        int extents[2];
+        int texturemins[2];
+        short lm_s;
+        short lm_t;
+
+    private:
+        void calculateSurfaceExtents();
     };
 
-    typedef std::shared_ptr<Face> FacePtr;
+    typedef std::shared_ptr<Surface> SurfacePtr;
 }

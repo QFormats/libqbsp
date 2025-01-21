@@ -29,6 +29,12 @@ struct vec2f_t
     float y;
 };
 
+struct vec2i_t
+{
+    int x;
+    int y;
+};
+
 struct vec3i_t
 {
     short x;

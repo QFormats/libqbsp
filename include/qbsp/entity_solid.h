@@ -1,29 +1,27 @@
 #pragma once
 
-#include "ftypes.h"
+#include "bsp_file.h"
 #include "entity.h"
 #include "primitives.h"
 
 namespace qformats::qbsp
 {
-    class SolidEntity
+    class SolidEntity : public BaseEntity
     {
     public:
         SolidEntity(SolidEntity &&other);
         SolidEntity(const bspFileContent &ctx, BaseEntity &entity);
-        const BaseEntity &Entity() const { return ent; }
-        const std::vector<FacePtr> &Faces() { return faces; }
-        bool IsWorldSPawn() { return ent.Classname() != "worldspawn"; };
+        const std::vector<SurfacePtr> &Faces() { return faces; }
+        bool IsWorldSPawn() { return classname != "worldspawn"; };
 
     protected:
+        virtual void convertToOpenGLCoords();
+
     private:
         void buildBSPTree(const fNode_t &);
         void getSurfaceIDsFromLeaf(int leafID);
         int getVertIndexFromEdge(int surfEdge);
-
-        BaseEntity &ent;
-        std::vector<FacePtr> faces;
-        int modelID;
+        std::vector<SurfacePtr> faces;
 
         friend class QBsp;
     };

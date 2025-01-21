@@ -14,4 +14,6 @@ set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
 
 add_subdirectory(src)
 
+
+target_include_directories(${PROJECT_NAME} PUBLIC "include/")
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
