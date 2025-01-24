@@ -6,26 +6,26 @@
 
 namespace qformats::qbsp
 {
-    class SolidEntity : public BaseEntity
-    {
-    public:
-        SolidEntity(SolidEntity &&other);
-        SolidEntity(const bspFileContent &ctx, BaseEntity &entity);
-        const std::vector<SurfacePtr> &Faces() { return faces; }
-        bool IsWorldSPawn() { return classname != "worldspawn"; };
+class SolidEntity : public BaseEntity
+{
+  public:
+    SolidEntity(SolidEntity &&other);
+    SolidEntity(const bspFileContent &ctx, BaseEntity &entity);
+    const std::vector<SurfacePtr> &Faces();
+    bool IsWorldSPawn();
 
-    protected:
-        virtual void convertToOpenGLCoords();
+  protected:
+    virtual void convertToOpenGLCoords();
 
-    private:
-        void buildBSPTree(const fNode_t &);
-        void getSurfaceIDsFromLeaf(int leafID);
-        int getVertIndexFromEdge(int surfEdge);
-        std::vector<SurfacePtr> faces;
+  private:
+    void buildBSPTree(const fNode_t &);
+    void getSurfaceIDsFromLeaf(int leafID);
+    int getVertIndexFromEdge(int surfEdge);
+    std::vector<SurfacePtr> m_faces;
 
-        friend class QBsp;
-    };
+    friend class QBsp;
+};
 
-    typedef std::shared_ptr<SolidEntity> SolidEntityPtr;
+typedef std::shared_ptr<SolidEntity> SolidEntityPtr;
 
-}
+} // namespace qformats::qbsp

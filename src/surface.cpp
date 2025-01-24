@@ -1,7 +1,7 @@
-#include <qbsp/primitives.h>
-#include <float.h>
 #include <algorithm>
 #include <cmath>
+#include <float.h>
+#include <qbsp/primitives.h>
 
 namespace qformats::qbsp
 {
@@ -77,4 +77,4 @@ namespace qformats::qbsp
             tristep += 3;
         }
     }
-}
+} // namespace qformats::qbsp

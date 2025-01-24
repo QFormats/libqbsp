@@ -18,32 +18,32 @@ namespace qformats::qbsp
 
     class BaseEntity
     {
-    public:
+      public:
         BaseEntity() {};
         virtual ~BaseEntity() = default;
-        const string &Classname() const { return classname; };
-        const map<string, string> &Attributes() const { return attributes; };
-        EEntityType Type() const { return type; };
-        bool IsExternalModel() const { return isExternalModel; };
-        int ModelID() const { return modelID; };
-        const vec3f_t &Origin() const { return origin; };
-        const float &Angle() const { return angle; };
+        const string &Classname() const;
+        const map<string, string> &Attributes();
+        EEntityType Type() const;
+        bool IsExternalModel() const;
+        int ModelID() const;
+        const vec3f_t &Origin();
+        const float &Angle() const;
         static void ParseEntites(const char *entsrc, std::function<void(BaseEntity &ent)> f);
 
-    protected:
+      protected:
         virtual void convertToOpenGLCoords();
 
-        int modelID = 0;
-        map<string, string> attributes;
-        string classname = "";
-        vec3f_t origin = {0};
-        EEntityType type = ETypePontEntity;
-        bool isExternalModel = false;
-        float angle = 0;
+        int m_modelId = 0;
+        map<string, string> m_attributes;
+        string m_classname = "";
+        vec3f_t m_origin = {0};
+        EEntityType m_type = ETypePontEntity;
+        bool m_isExternalModel = false;
+        float m_angle = 0;
 
-    private:
+      private:
         void setup();
 
         friend class QBsp;
     };
-}
+} // namespace qformats::qbsp

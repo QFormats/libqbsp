@@ -1,6 +1,6 @@
 #include <qbsp/entity.h>
-#include <sstream>
 #include <regex>
+#include <sstream>
 
 namespace qformats::qbsp
 {
@@ -63,56 +63,85 @@ namespace qformats::qbsp
                 continue;
             }
 
-            current_ent.attributes.emplace(matches[0], matches[1]);
+            current_ent.m_attributes.emplace(matches[0], matches[1]);
         }
     }
 
     void BaseEntity::setup()
     {
-        if (attributes.contains("classname"))
+        if (m_attributes.contains("classname"))
         {
-            classname = attributes["classname"];
-            if (classname == "worldspawn")
+            m_classname = m_attributes["classname"];
+            if (m_classname == "worldspawn")
             {
-                this->type = ETypeSolidEntity;
-                this->modelID = 0;
+                this->m_type = ETypeSolidEntity;
+                this->m_modelId = 0;
             }
         }
 
-        if (attributes.contains("origin"))
+        if (m_attributes.contains("origin"))
         {
-            std::stringstream stream(attributes["origin"]);
-            stream >> origin.x >> origin.y >> origin.z;
+            std::stringstream stream(m_attributes["origin"]);
+            stream >> m_origin.x >> m_origin.y >> m_origin.z;
             return;
         }
 
-        if (attributes.contains("model"))
+        if (m_attributes.contains("model"))
         {
-            const auto &model = attributes["model"];
+            const auto &model = m_attributes["model"];
             if (model.starts_with("*"))
             {
-                modelID = std::stoi(attributes["model"].c_str() + 1);
-                type = ETypeSolidEntity;
+                m_modelId = std::stoi(m_attributes["model"].c_str() + 1);
+                m_type = ETypeSolidEntity;
                 return;
             }
-            isExternalModel = true;
+            m_isExternalModel = true;
             return;
         }
 
-        if (attributes.contains("angle"))
+        if (m_attributes.contains("angle"))
         {
 
-            std::stringstream stream(attributes["angle"]);
-            stream >> angle;
+            std::stringstream stream(m_attributes["angle"]);
+            stream >> m_angle;
             return;
         }
     }
 
     void BaseEntity::convertToOpenGLCoords()
     {
-        auto temp = origin.y;
-        origin.y = origin.z;
-        origin.z = -temp;
-        angle += 180;
+        auto temp = m_origin.y;
+        m_origin.y = m_origin.z;
+        m_origin.z = -temp;
+        m_angle += 180;
     }
-}
+
+    const string &BaseEntity::Classname() const
+    {
+        return m_classname;
+    };
+    const map<string, string> &BaseEntity::Attributes()
+    {
+        return m_attributes;
+    };
+    EEntityType BaseEntity::Type() const
+    {
+        return m_type;
+    };
+    bool BaseEntity::IsExternalModel() const
+    {
+        return m_isExternalModel;
+    };
+    int BaseEntity::ModelID() const
+    {
+        return m_modelId;
+    };
+    const vec3f_t &BaseEntity::Origin()
+    {
+        return m_origin;
+    };
+    const float &BaseEntity::Angle() const
+    {
+        return m_angle;
+    };
+} // namespace qformats::qbsp
