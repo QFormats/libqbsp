@@ -10,7 +10,8 @@ namespace qformats::qbsp
 
     struct Color
     {
-        union {
+        union
+        {
             struct
             {
                 uint8_t r, g, b, a;
@@ -34,7 +35,7 @@ namespace qformats::qbsp
 
     class Lightmap
     {
-      public:
+    public:
         Lightmap(uint8_t *data, size_t sz);
         void PackLitSurfaces(std::vector<SolidEntityPtr> ent);
 
@@ -42,7 +43,7 @@ namespace qformats::qbsp
         const int Height() const;
         const vector<Color> &RGBA() const;
 
-      private:
+    private:
         void initChart(LightmapChart *chart, int width, int height);
         bool addChart(LightmapChart *chart, int w, int h, short *outx, short *outy);
         int allocateBlock(int w, int h, short *x, short *y);
@@ -54,12 +55,12 @@ namespace qformats::qbsp
 
         uint8_t *m_rawData;
         vector<Color> m_lightmapData;
-        size_t m_size;
-        int m_count;
-        int m_sampleCount;
-        int m_lastAllocated;
+        size_t m_size = 0;
+        int m_count = 0;
+        int m_sampleCount = 0;
+        int m_lastAllocated = 0;
 
-        int m_width;
-        int m_height;
+        int m_width = 0;
+        int m_height = 0;
     };
 } // namespace qformats::qbsp
