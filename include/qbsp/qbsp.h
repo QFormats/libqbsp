@@ -49,7 +49,7 @@ namespace qformats::qbsp
      */
     class QBsp
     {
-      public:
+    public:
         QBsp() = default;
         QBsp(QBspConfig cfg) : m_config(cfg) {};
         ~QBsp() = default;
@@ -67,7 +67,7 @@ namespace qformats::qbsp
         const vector<bspTexure> &Textures() const;
         const Lightmap *LightMap() const;
 
-      private:
+    private:
         void parseEntities(const char *entsrc);
         int loadTextureInfo();
         void prepareLevel();
@@ -76,6 +76,7 @@ namespace qformats::qbsp
 
         std::ifstream m_istream;
         QBspConfig m_config;
+        string m_mapPath = "";
 
         vector<EntityPtr> m_pointEntities;
         map<string, vector<EntityPtr>> m_entities;
